@@ -8,11 +8,11 @@ Random-quote-generator
 
 <div align="center">
   <h3>
-    <a href="https://buttons-and-inputs.onrender.com">
+    <a href="https://random-quote-generator-rose.vercel.app/">
       Demo
     </a>
     <span> | </span>
-    <a href="https://github.com/satellites7/buttons-and-inputs">
+    <a href="https://github.com/satellites7/Random-quote-generator">
       Solution
     </a>
     <span> | </span>

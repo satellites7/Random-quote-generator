@@ -1,79 +1,42 @@
 import { useState, useEffect } from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap";
 import './App.css';
-import List from './Components/List.jsx'
-import Editor from './Components/Editor.jsx'
+import styled from 'styled-components'
+
+import { Container } from 'react-bootstrap';
+import Refresh from './Components/Refresh'
+import Quotes from './Components/Quotes'
+
+
+const TheContainer = styled(Container) `
+      margin-top: 30px;
+`
 
 
 function App() {
-  const [todos, setTodos] = useState(
-    localStorage.getItem('task') ?
-      JSON.parse(localStorage.getItem('task')) :
-      { last: 0, task: [] }
-  )
+    const [quote, setQuote] = useState([])
+    const [author,setAuthor] = useState('')
+    const [loading, setLoading] = useState(true)
+    let random = author ? '' : 'random'
+    let api = `https://quote-garden.herokuapp.com/api/v3/quotes/${random}?author=${author}`;
 
-  const [filter, setFilter] = useState('All');
-
-  useEffect(() => {
-    localStorage.setItem('task', JSON.stringify(todos))
-  }, [todos])
-
-  const addTask = (value) => {
-    setTodos({
-      last: todos.last + 1,
-      task: [...todos.task,
-      {
-        id: todos.last + 1,
-        done: false,
-        text: value
-      }]
-    })
-  }
-  const toggleTask = (completed, id) => {
-    setTodos({
-      ...todos,
-      task: todos.task.map((item) => {
-        if (item.id === id) {
-          return { ...item, done: completed }
-        }
-        return item
-      })
-    })
-  }
-
-  const removeTask = (id) => {
-    setTodos({
-      ...todos,
-      task: todos.task.filter(item => item.id !== id)
-    })
-  }
-
-  const clearCompleted = () => {
-    setTodos({
-      ...todos,
-      task: todos.task.filter(item => !item.done)
-    })
-  }
+    useEffect(() => {
+      (async function () {
+        let data = await fetch(api).then((res) => res.json());
+        setQuote(data);
+        setLoading(false)
+      })();
+    }, [api]);
 
 
-  return (
+    return (
+    
     <div className="App">
-      <header>#todo</header>
-      <div className="container">
-        <div className="tabs" onClick={(e) => { e.target.className !== 'tabs' && setFilter(e.target.innerHTML) }} >
-          <div className={filter === 'All' ? 'tab tab-border' : 'tab'}>All</div>
-          <div className={filter === 'Active' ? 'tab tab-border' : 'tab'}>Active</div>
-          <div className={filter === 'Completed' ? 'tab tab-border' : 'tab'}>Completed</div>
-        </div>
-        <div>
-          <Editor addTask={addTask} />
-          <List todos={todos}
-            toggleTask={toggleTask}
-            removeTask={removeTask}
-            clearCompleted={clearCompleted}
-            filter={filter}
-          />
-        </div>
-      </div>
+      <TheContainer>
+        <Refresh setAuthor={setAuthor} api={api} setQuote={setQuote} author={author} setLoading={setLoading}/>
+        <Quotes quote={quote} setAuthor={setAuthor} author={author} loading={loading} setLoading={setLoading}/>
+      </TheContainer>
       <footer><p className="bottom">created by <span style={{ fontWeight: 700 }}>satellites7</span> - devChallenges.io</p></footer>
     </div>
   );

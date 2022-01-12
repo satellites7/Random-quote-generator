@@ -16,7 +16,7 @@ Random-quote-generator
       Solution
     </a>
     <span> | </span>
-    <a href="https://github.com/satellites7/image/blob/main/random-quote-generator-rose.vercel.app_%20(1).png">
+    <a href="https://devchallenges.io/challenges/8Y3J4ucAMQpSnYTwwWW8">
       Challenge
     </a>
   </h3>
@@ -28,7 +28,7 @@ Random-quote-generator
 
 ## Overview
 
-![screenshot](https://github.com/satellites7/image/blob/main/buttons-and-inputs.onrender.com_buttons%20(1).png)
+![screenshot](https://github.com/satellites7/image/blob/main/random-quote-generator-rose.vercel.app_%20(1).png)
 
 
 
